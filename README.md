@@ -30,11 +30,17 @@ Project Structure
 
 cloud-security-pipeline/
 │
+
 ├── app/                   # Sample Flask application
+
 ├── infra/                 # Terraform IaC configs
+
 ├── .github/workflows/     # CI/CD pipeline definitions
+
 ├── docs/                  # Project documentation
+
 ├── reports/               # Security scan and deployment logs
+
 └── README.md
 
 Learning Outcomes
