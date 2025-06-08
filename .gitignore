@@ -1,0 +1,7 @@
+LaptopPipeProject2.pem
+infra/.terraform/
+infra/terraform.tfstate*
+__pycache__/
+*.pyc
+.env
+*.log
