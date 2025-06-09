@@ -6,32 +6,34 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # GitHub use a fresh Ubuntu machine to run this job
+    runs-on: ubuntu-latest  # GitHub uses a fresh Ubuntu machine to run this job
 
     steps:
-    - uses: actions/checkout@v4  # Clone your repo code into this runner machine
+    - uses: actions/checkout@v4  # Clone your repo code into the runner
+
+    - name: Run Bandit (Python security scan)
+      run: |
+        pip install bandit
+        bandit -r app/
 
     - name: Setup SSH Agent
       uses: webfactory/ssh-agent@v0.9.0
       with:
         ssh-private-key: ${{ secrets.EC2_SSH_KEY }}  # Use .pem key to connect to EC2
 
-    - name: Copy files to EC2 # Send the project files to AWS instance
-
-    # Copy all files to EC2, excluding the .git folder to prevent permission errors
+    - name: Copy files to EC2  # Send the project files to AWS instance
+      # Copy all files to EC2, excluding the .git and scripts folders to prevent permission errors and avoid uploading local tools
       run: |
         rsync -avz --exclude='.git' --exclude='scripts/' -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app
 
-      #run: |
-        #scp -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app
-        # Step 3: Send (copy) all your files to ~/app folder on the EC2 instance
-
-    - name: Build & Restart Docker container remotely # Rebuild and restart app
+    - name: Build, Scan & Restart Docker container remotely  # Build, scan, and start app
       run: |
         ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
           cd ~/app &&
-          docker stop flask_app || true &&         # Stop the old container (if running)
-          docker rm flask_app || true &&           # Remove the old container
-          docker build -t flask_app . &&           # Rebuild the Docker image
-          docker run -d --name flask_app -p 5000:5000 flask_app  # Start it again on port 5000
+          docker stop flask_app || true &&
+          docker rm flask_app || true &&
+          docker build -t flask_app . &&
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh &&
+          ./trivy image flask_app &&
+          docker run -d --name flask_app -p 5000:5000 flask_app
         '
