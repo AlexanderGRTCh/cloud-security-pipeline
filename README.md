@@ -14,7 +14,7 @@ Features
 
     Automated Alerts: Pipeline fails on detected vulnerabilities or misconfigurations; summary reports generated for each build.
 
-Tech Stack
+Tech Stack 
 
     Cloud: AWS 
 
