@@ -1,54 +1,61 @@
 Cloud Security Pipeline
 Overview
 
-This project demonstrates a secure, automated DevSecOps pipeline for deploying cloud-native applications. It integrates security best practices, infrastructure-as-code, automated vulnerability scanning, and continuous deployment in a simulated AWS environment.
-Features
+This repository demonstrates a complete, production-grade DevSecOps pipeline for secure deployment of cloud-native applications. The project integrates security best practices, infrastructure-as-code, automated vulnerability scanning, and continuous deployment using a simulated AWS environment. All components are designed to showcase real-world skills in secure cloud automation and application delivery.
+Key Features
 
-    Infrastructure as Code: Automated provisioning using Terraform (AWS, supports LocalStack for local testing).
+    Infrastructure as Code: Automated, repeatable AWS provisioning via Terraform, including support for LocalStack for local validation.
 
-    Sample Vulnerable App: Simple Flask (Python) web app for security testing.
+    Vulnerable Reference Application: A purpose-built Python Flask web application designed to test security tooling.
 
-    CI/CD Pipeline: GitHub Actions automate linting, dependency checks, static code analysis, container scanning, and deployment.
+    End-to-End CI/CD Pipeline: GitHub Actions orchestrate linting, dependency checks, static code analysis, container image scanning, and automated deployment to AWS.
 
-    Cloud Security Controls: Least-privilege IAM, secure secrets management, network segmentation, and logging/monitoring (CloudTrail, GuardDuty).
+    Automated Dockerized Deployment: Pipeline builds, copies, and deploys the Dockerized application to an EC2 instance using secure, scripted workflows.
 
-    Automated Alerts: Pipeline fails on detected vulnerabilities or misconfigurations; summary reports generated for each build.
+    Security Group Hardening: Only essential ports (22 for SSH, 5000 for Flask) are exposed; all other ports are explicitly blocked and verified via custom tooling.
 
-Tech Stack 
+    Port Verification Automation: Custom Python script (/scripts/port_tester.py) automatically audits the network configuration after each deployment to ensure adherence to least-privilege principles.
 
-    Cloud: AWS 
+    Cloud Security Controls: Enforced least-privilege IAM roles, secure secrets management, network segmentation, and comprehensive AWS logging and monitoring (CloudTrail, GuardDuty).
 
-    IaC: Terraform
+    Automated Alerting and Reporting: Pipeline execution halts on any detected vulnerabilities or misconfigurations; security scan and deployment logs are generated for auditability.
 
-    App: Python Flask (vulnerable demo)
+Technology Stack
+
+    Cloud Provider: AWS
+
+    Infrastructure as Code: Terraform
+
+    Application: Python Flask (intentionally vulnerable)
 
     CI/CD: GitHub Actions
 
-    Security Tools: Bandit, Trivy, pip-audit, AWS CloudTrail/GuardDuty
+    Security Tools: Bandit, Trivy, pip-audit, AWS CloudTrail, AWS GuardDuty
 
-Project Structure
+Repository Structure:
 
 cloud-security-pipeline/
 │
-
-├── app/                   # Sample Flask application
-
-├── infra/                 # Terraform IaC configs
-
-├── .github/workflows/     # CI/CD pipeline definitions
-
+├── app/                   # Flask application code
+├── infra/                 # Terraform IaC definitions
+├── .github/workflows/     # CI/CD pipeline workflows
+├── scripts/               # Automation and verification scripts
+│   └── port_tester.py     # Automated port verification tool
 ├── docs/                  # Project documentation
-
 ├── reports/               # Security scan and deployment logs
-
 └── README.md
+
 
 Learning Outcomes
 
-    Automate secure cloud deployments using industry-standard tools
+    Build and operate secure, automated cloud deployment pipelines using industry-standard technologies.
 
-    Integrate security scanning into every stage of development
+    Integrate vulnerability and configuration scanning at every stage of development and deployment.
 
-    Enforce security controls and monitor for threats in cloud environments
+    Enforce cloud security controls through code and verify outcomes with automated tools.
 
-    Gain practical DevSecOps experience for portfolio and interviews
+    Monitor, audit, and document security posture throughout the CI/CD process.
+
+    Demonstrate hands-on DevSecOps proficiency for professional portfolios and technical interviews.
+
+For detailed usage, setup, and pipeline configuration instructions, see /docs and inline documentation throughout the repository.

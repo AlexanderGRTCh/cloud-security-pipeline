@@ -20,7 +20,7 @@ jobs:
 
     # Copy all files to EC2, excluding the .git folder to prevent permission errors
       run: |
-        rsync -avz --exclude='.git' -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app
+        rsync -avz --exclude='.git' --exclude='scripts/' -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app
 
       #run: |
         #scp -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app
