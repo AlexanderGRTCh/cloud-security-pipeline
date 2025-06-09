@@ -17,8 +17,13 @@ jobs:
         ssh-private-key: ${{ secrets.EC2_SSH_KEY }}  # Use .pem key to connect to EC2
 
     - name: Copy files to EC2 # Send the project files to AWS instance
+
+    # Copy all files to EC2, excluding the .git folder to prevent permission errors
       run: |
-        scp -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app
+        rsync -avz --exclude='.git' -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app
+
+      #run: |
+        #scp -o StrictHostKeyChecking=no -r . ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/app
         # Step 3: Send (copy) all your files to ~/app folder on the EC2 instance
 
     - name: Build & Restart Docker container remotely # Rebuild and restart app
