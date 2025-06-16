@@ -17,7 +17,7 @@ def ping():
     ip = request.args.get("ip", "8.8.8.8")
     
     # Vulnerability: passes user input directly to the shell — command injection
-    output = os.popen(f"ping -c 1 {ip}").read()  # Run 'ping' command with user injected IP and read commands output
+    output = os.popen(f"ping -n 1 {ip}").read()  # Run 'ping' command with user injected IP and read commands output
     return f"<pre>{output}</pre>"  # Show the ping output in formatted HTML block
 
 if __name__ == "__main__":  # If this file runs directly
