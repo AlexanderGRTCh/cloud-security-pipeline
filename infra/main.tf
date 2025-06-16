@@ -6,7 +6,9 @@ provider "aws" {
 # Create a security group for the Flask server
 resource "aws_security_group" "flask_sg" {
   name        = "flask_sg"                               # Name of the security group
-  description = "Allow SSH and Flask app traffic"       
+  description = "Allow SSH and Flask app traffic"  
+
+
 
   # Allow SSH (port 22) from anywhere (insecure, for demo/dev only)
   ingress {
@@ -43,6 +45,8 @@ resource "aws_instance" "flask_server" {
   tags = {
     Name = "FlaskSecurityDemo"                        # Name tag for AWS console
   }
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
+
 
   # Automate Docker install after first boot
   user_data = <<-EOF
