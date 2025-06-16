@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 # This function accepts an IP address from the URL, pings that IP from the server,
-# and returns the ping result as formatted HTML. Vulnerable to command injection.
+# and returns the ping result as formatted HTML. Vulnerable to command injection..
 
 app = Flask(__name__)  # Create a Flask app instance
 
