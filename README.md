@@ -68,6 +68,14 @@ REST API
   # Add a new threat
   curl -X POST -H "Content-Type: application/json" -d '{"type": "dos", "severity": "low"}' http://localhost:5000/api/threat
 
+
+### Cloud Networking Note
+
+The `/ping` endpoint runs a real `ping` command from the server (EC2 instance) to a target IP.  
+**Note:** On most AWS setups, outbound ICMP (ping) is blocked by default for security reasons.  
+If this endpoint returns a blank page or no output, it’s due to AWS network/firewall rules, not an app error.  
+This is a best practice in cloud security, and the rest of the project functions normally regardless.
+
 Developer Documentation
 
 - All critical code and tests are fully commented for onboarding.
