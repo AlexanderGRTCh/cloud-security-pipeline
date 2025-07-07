@@ -1,7 +1,7 @@
 Cloud Security Pipeline
 
 Overview
-This repository demonstrates a complete, production-grade DevSecOps pipeline for secure deployment of cloud-native applications. The project integrates security best practices, infrastructure-as-code, automated vulnerability scanning, and continuous deployment using a simulated AWS environment. All components are designed to showcase real-world skills in secure cloud automation and application delivery.
+This repository demonstrates a realistic DevSecOps pipeline simulation, designed to securely automate the deployment of cloud-native applications. The project integrates industry-standard security practices, infrastructure-as-code, automated vulnerability scanning, and continuous deployment workflows within a controlled AWS environment. It's tailored specifically for portfolio demonstration, technical interviews, and learning purposes.
 
 Key Features
 
@@ -17,7 +17,7 @@ Key Features
 
 ## Security Automation Demo
 
-Our CI/CD pipeline runs automated security scans (Bandit, Trivy) on every push. If vulnerabilities are found, deployment is blocked.
+Our CI/CD pipeline executes automated security scans (Bandit, Trivy) on every code push. Deployments are blocked if vulnerabilities are found, ensuring security enforcement throughout development.
 
 ![Bandit Block Screenshot](docs/bandit-block.png)
 
